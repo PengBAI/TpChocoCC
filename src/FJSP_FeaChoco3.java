@@ -49,12 +49,12 @@ public class FJSP_FeaChoco3 {
 	 * Fixed Jobs Scheduling Problem (FJSP)
 	 */
 	public static void FJSP() {
-		// DÈclaration du Solver
+		// D√©claration du Solver
 		Solver FJSPSolv = new Solver("FJSP");
 
-		// DÈclaration des variables
-		// A[i]: numÈro de líagent auquel est affectÈe la t‚che i. 
-		IntVar[] A = VF.enumeratedArray("T‚che", n, 0, m - 1, FJSPSolv);
+		// D√©claration des variables
+		// A[i]: num√©ro de l'agent auquel est affect√©e l√¢che i. 
+		IntVar[] A = VF.enumeratedArray("T√¢che", n, 0, m - 1, FJSPSolv);
 
 		IntVar[] tddt = new IntVar[n];
 		IntVar[] tdft = new IntVar[n];
@@ -63,9 +63,9 @@ public class FJSP_FeaChoco3 {
 			tdft[i] = VF.fixed(dft[i], FJSPSolv);
 		}
 		
-		// DÈclaration des contraintes
+		// D√©claration des contraintes
 		for (int i = 0; i < n; i++) {
-			// pour diffÈrentes t‚ches sur un mÍme agent 
+			// pour diff√©rentes t√¢ches sur un m√™me agent 
 			for (int j = 0; j < n; j++) {
 				if (i != j) {
 					FJSPSolv.post(LCF.ifThen(
@@ -76,11 +76,11 @@ public class FJSP_FeaChoco3 {
 			}
 		}
 
-		// StratÈgie
+		// Strat√©gie
 		AbstractStrategy[] as = { ISF.lexico_LB(A) };
 		FJSPSolv.set(as);
 
-		// RÈsolution
+		// R√©solution
 		int cpt = 0;
 		if (FJSPSolv.findSolution()) {
 
@@ -90,7 +90,7 @@ public class FJSP_FeaChoco3 {
 				System.out.println(A[i].getName() + " " + A[i].getValue());
 			}
 			System.out.println(FJSPSolv.getMeasures().getSolutionCount()
-					+ " solution(s) trouvÈe(s) en "
+					+ " solution(s) trouv√©e(s) en "
 					+ FJSPSolv.getMeasures().getTimeCount() + " secondes");
 		} else {
 			System.out.println("Pas de solution");
@@ -102,12 +102,12 @@ public class FJSP_FeaChoco3 {
 	 * Fixed Jobs Scheduling Problem with Spead Constraint (FJSPwSC)
 	 */
 	public static void FJSPwSC() {
-		// DÈclaration du Solver
+		// D√©claration du Solver
 		Solver FJSPwSCSolv = new Solver("FJSPwSC");
 
-		// DÈclaration des variables
-		// A[i]: numÈro de líagent auquel est affectÈe la t‚che i.
-		IntVar[] A = VF.enumeratedArray("T‚che", n, 0, m - 1, FJSPwSCSolv);
+		// D√©claration des variables
+		// A[i]: num√©ro de l'agent auquel est affect√©e la t√¢che i.
+		IntVar[] A = VF.enumeratedArray("T√¢che", n, 0, m - 1, FJSPwSCSolv);
 
 		IntVar[] tddt = new IntVar[n];
 		IntVar[] tdft = new IntVar[n];
@@ -115,12 +115,12 @@ public class FJSP_FeaChoco3 {
 			tddt[i] = VF.fixed(ddt[i], FJSPwSCSolv);
 			tdft[i] = VF.fixed(dft[i], FJSPwSCSolv);
 		}
-		// dta[k]: date de dÈbut de travail sur líagent k
-		IntVar[] dta = VF.enumeratedArray("dÈbut", m, 360, 1320, FJSPwSCSolv);
+		// dta[k]: date de d√©but de travail sur l'agent k
+		IntVar[] dta = VF.enumeratedArray("d√©but", m, 360, 1320, FJSPwSCSolv);
 		
-		// DÈclaration des contraintes
+		// D√©claration des contraintes
 		for (int i = 0; i < n; i++) {
-			// pour diffÈrentes t‚ches sur un mÍme agent 
+			// pour diff√©rentes t√¢ches sur un mÔøΩme agent 
 			for (int j = 0; j < n; j++) {
 				if (i != j) {
 					FJSPwSCSolv.post(LCF.ifThen(
@@ -133,16 +133,16 @@ public class FJSP_FeaChoco3 {
 				// un agent travaille au maximum 8 heures
 				FJSPwSCSolv.post(LCF.ifThen(
 						ICF.arithm(A[i], "=", k),
-						LCF.and(ICF.arithm(dta[k], "<=", tddt[i]),              // dta[k] <= ddt de toute les t‚ches
-								ICF.arithm(dta[k], ">=", tdft[i], "-", 480)))); // dta[k] + 480 >= dft de toute les t‚ches
+						LCF.and(ICF.arithm(dta[k], "<=", tddt[i]),              // dta[k] <= ddt de toute les tÔøΩches
+								ICF.arithm(dta[k], ">=", tdft[i], "-", 480)))); // dta[k] + 480 >= dft de toute les tÔøΩches
 			}
 		}
 
-		// StratÈgie
+		// Strat√©gie
 		AbstractStrategy[] as = { ISF.lexico_LB(A) };
 		FJSPwSCSolv.set(as);
 
-		// RÈsolution
+		// R√©solution
 		int cpt = 0;
 		if (FJSPwSCSolv.findSolution()) {
 
@@ -152,7 +152,7 @@ public class FJSP_FeaChoco3 {
 				System.out.println(A[i].getName() + " " + A[i].getValue());
 			}
 			System.out.println(FJSPwSCSolv.getMeasures().getSolutionCount()
-					+ " solution(s) trouvÈe(s) en "
+					+ " solution(s) trouv√©e(s) en "
 					+ FJSPwSCSolv.getMeasures().getTimeCount() + " secondes");
 		} else {
 			System.out.println("Pas de solution");
@@ -163,12 +163,12 @@ public class FJSP_FeaChoco3 {
 	 * Prise en compte de pause (FJSPwSCaP)
 	 * */
 	public static void FJSPwSCaP() {
-		// DÈclaration du Solver
+		// D√©claration du Solver
 		Solver FJSPwSCaPSolv = new Solver("FJSPwSCaP");
 
-		// DÈclaration des variables
-		// A[i]: numÈro de líagent auquel est affectÈe la t‚che i.
-		IntVar[] A = VF.enumeratedArray("T‚che", n, 0, m - 1, FJSPwSCaPSolv);
+		// D√©claration des variables
+		// A[i]: num√©ro de l'agent auquel est affect√©e l√¢che i.
+		IntVar[] A = VF.enumeratedArray("T√¢che", n, 0, m - 1, FJSPwSCaPSolv);
 
 		IntVar[] tddt = new IntVar[n];
 		IntVar[] tdft = new IntVar[n];
@@ -176,14 +176,14 @@ public class FJSP_FeaChoco3 {
 			tddt[i] = VF.fixed(ddt[i], FJSPwSCaPSolv);
 			tdft[i] = VF.fixed(dft[i], FJSPwSCaPSolv);
 		}
-		// dta[k]: date de dÈbut de travail de líagent k
-		IntVar[] dta = VF.enumeratedArray("dÈbut", m, 360, 1320, FJSPwSCaPSolv);
-		// dpa[k]: date de dÈbut de pause de l'agent k
+		// dta[k]: date de d√©but de travail de l'agent k
+		IntVar[] dta = VF.enumeratedArray("d√©but", m, 360, 1320, FJSPwSCaPSolv);
+		// dpa[k]: date de d√©but de pause de l'agent k
 		IntVar[] dpa = VF.enumeratedArray("pause", m, 360, 1320, FJSPwSCaPSolv);
 
-		// DÈclaration des contraintes
+		// D√©claration des contraintes
 		for (int i = 0; i < n; i++) {
-			// pour diffÈrentes t‚ches sur un mÍme agent 
+			// pour diff√©rentes t√¢ches sur un m√™me agent 
 			for (int j = 0; j < n; j++) {
 				if (i != j) {
 					FJSPwSCaPSolv.post(LCF.ifThen(
@@ -197,10 +197,10 @@ public class FJSP_FeaChoco3 {
 				// un agent travaille au maximum 8 heures
 				FJSPwSCaPSolv.post(LCF.ifThen(
 						ICF.arithm(A[i], "=", k),
-						LCF.and(ICF.arithm(dta[k], "<=", tddt[i]),              // dta[k] <= ddt de toute les t‚ches
-								ICF.arithm(dta[k], ">=", tdft[i], "-", 480)))); // dta[k] + 480 >= dft de toute les t‚ches
+						LCF.and(ICF.arithm(dta[k], "<=", tddt[i]),              // dta[k] <= ddt de toute les t√¢ches
+								ICF.arithm(dta[k], ">=", tdft[i], "-", 480)))); // dta[k] + 480 >= dft de toute les t√¢ches
 				
-				// la pause ne doit pas dans la durÈe de t‚che
+				// la pause ne doit pas dans la dur√©e de t√¢che
 				FJSPwSCaPSolv.post(LCF.ifThen(
 						ICF.arithm(A[i], "=", k),
 						LCF.or(ICF.arithm(dpa[k], "<=", tddt[i], "-", 30), // soit dpa + 30 <= ddt
@@ -208,18 +208,18 @@ public class FJSP_FeaChoco3 {
 			}
 		}
 		
-		// sur le mÍme agent k, les contraintes entre dÈbut de travail agent(dta) et dÈbut de pause agent(dpa)
+		// sur le m√™me agent k, les contraintes entre d√©but de travail agent(dta) et d√©but de pause agent(dpa)
 		for (int k = 0; k < m; k++) {
 			FJSPwSCaPSolv.post(LCF.and(
 					ICF.arithm(dpa[k], "-", dta[k], "<=", 360), // dpa - dta <= 360
 					ICF.arithm(dpa[k],"-" , dta[k],">=", 90))); // dta + 480 - (dpa + 30) <= 360 
 		}
 
-		// StratÈgie
+		// Strat√©gie
 		AbstractStrategy[] as = { ISF.lexico_LB(A) };
 		FJSPwSCaPSolv.set(as);
 
-		// RÈsolution
+		// R√©solution
 		int cpt = 0;
 		if (FJSPwSCaPSolv.findSolution()) {
 
@@ -229,7 +229,7 @@ public class FJSP_FeaChoco3 {
 				System.out.println(A[i].getName() + " " + A[i].getValue());
 			}
 			System.out.println(FJSPwSCaPSolv.getMeasures().getSolutionCount()
-					+ " solution(s) trouvÈe(s) en "
+					+ " solution(s) trouv√©e(s) en "
 					+ FJSPwSCaPSolv.getMeasures().getTimeCount() + " secondes");
 		} else {
 			System.out.println("Pas de solution");
