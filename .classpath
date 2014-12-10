@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="D:/EUP/DI-5/DI5_S9/PPC/UnChar/choco-solver-3.2.0-jar-with-dependencies.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/D:/EUP/DI-5/DI5_S9/PPC/choco-3.2.0/choco-3.2.0/apidocs-3.2.0.zip!/apidocs"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
