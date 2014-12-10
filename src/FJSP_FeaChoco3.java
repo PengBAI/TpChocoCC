@@ -13,7 +13,7 @@ public class FJSP_FeaChoco3 {
 	 */
 	static int n;
 	// le nombre de l'agent qu'on a definit
-	static int m = 35;
+	static int m = 8;
 	static int[] ddt, dft;
 
 	public static void main(String[] args) {
@@ -27,11 +27,11 @@ public class FJSP_FeaChoco3 {
 		dft = MonLecteurDeFichier.GetDateDeFinJobs();
 
 		System.out.println("------------------------------------------------");
-		System.out.println("n= " + n);
+		System.out.println("n = " + n);
 		for (int j = 0; j < n; j++)
 			System.out.println("dddt[" + j + "]= " + ddt[j] + " " + "ddf[" + j
 					+ "]= " + dft[j]);
-		System.out.println("m= " + m);
+		System.out.println("m = " + m);
 		System.out.println("------------------------------------------------");
 
 		System.out.println("FJSP:");
@@ -93,7 +93,7 @@ public class FJSP_FeaChoco3 {
 					+ " solution(s) trouvée(s) en "
 					+ FJSPSolv.getMeasures().getTimeCount() + " secondes");
 		} else {
-			System.out.println("Pas de solution");
+			System.out.println("Pas de solution dans " + FJSPSolv.getMeasures().getTimeCount() + " secondes");
 		}
 
 	}
@@ -120,7 +120,7 @@ public class FJSP_FeaChoco3 {
 		
 		// Déclaration des contraintes
 		for (int i = 0; i < n; i++) {
-			// pour différentes tâches sur un m�me agent 
+			// pour différentes tâches sur un même agent 
 			for (int j = 0; j < n; j++) {
 				if (i != j) {
 					FJSPwSCSolv.post(LCF.ifThen(
@@ -134,7 +134,7 @@ public class FJSP_FeaChoco3 {
 				FJSPwSCSolv.post(LCF.ifThen(
 						ICF.arithm(A[i], "=", k),
 						LCF.and(ICF.arithm(dta[k], "<=", tddt[i]),              // dta[k] <= ddt de toute les t�ches
-								ICF.arithm(dta[k], ">=", tdft[i], "-", 480)))); // dta[k] + 480 >= dft de toute les t�ches
+								ICF.arithm(dta[k], ">=", tdft[i], "-", 480)))); // dta[k] + 480 >= dft de toute les tâches
 			}
 		}
 
@@ -155,7 +155,7 @@ public class FJSP_FeaChoco3 {
 					+ " solution(s) trouvée(s) en "
 					+ FJSPwSCSolv.getMeasures().getTimeCount() + " secondes");
 		} else {
-			System.out.println("Pas de solution");
+			System.out.println("Pas de solution dans " + FJSPwSCSolv.getMeasures().getTimeCount() + " secondes");
 		}
 	}
 
@@ -232,7 +232,7 @@ public class FJSP_FeaChoco3 {
 					+ " solution(s) trouvée(s) en "
 					+ FJSPwSCaPSolv.getMeasures().getTimeCount() + " secondes");
 		} else {
-			System.out.println("Pas de solution");
+			System.out.println("Pas de solution dans " + FJSPwSCaPSolv.getMeasures().getTimeCount() + " secondes");
 		}
 	}
 }
